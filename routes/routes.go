@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"bluebell/controller"
 	"bluebell/logger"
 	"bluebell/settings"
 	"net/http"
@@ -13,6 +14,10 @@ func Setup(mode string) *gin.Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.New()
+
+	{
+		r.POST("/signup", controller.SignUpHandler)
+	}
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
 
 	r.GET("/version", func(c *gin.Context) {
