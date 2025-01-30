@@ -1,9 +1,9 @@
 package routes
 
 import (
+	"bluebell/logger"
+	"bluebell/settings"
 	"net/http"
-	"web_app/logger"
-	"web_app/settings"
 
 	"github.com/gin-gonic/gin"
 )
