@@ -14,12 +14,16 @@ func Setup(mode string) *gin.Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.New()
+	r.Use(logger.GinLogger(), logger.GinRecovery(true))
 
 	{
 		r.POST("/signup", controller.SignUpHandler)
+		r.POST("/signin", controller.LoginHandler)
 	}
-	r.Use(logger.GinLogger(), logger.GinRecovery(true))
 
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
 	r.GET("/version", func(c *gin.Context) {
 		c.String(http.StatusOK, settings.Conf.Version)
 	})
