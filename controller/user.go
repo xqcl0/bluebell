@@ -40,7 +40,7 @@ func LoginHandler(c *gin.Context) {
 		ResponseErrorWithMsg(c, CodeInvalidParams, err.Error())
 		return
 	}
-	err = logic.Login(p)
+	token, err := logic.Login(p)
 	if err != nil {
 		zap.L().Error("login in with error", zap.Error(err))
 		if errors.Is(err, mysql.ErrorPasswordWrong) {
@@ -55,5 +55,5 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	zap.L().Info("user login in ", zap.Any("user", *p))
-	ResponseSuccess(c, nil)
+	ResponseSuccess(c, token)
 }

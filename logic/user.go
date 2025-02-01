@@ -3,6 +3,7 @@ package logic
 import (
 	"bluebell/dao/mysql"
 	"bluebell/models"
+	"bluebell/pkg/jwt"
 	"bluebell/pkg/snowflake"
 	"crypto/md5"
 	"encoding/hex"
@@ -35,17 +36,20 @@ func SignUp(p *models.ParamSignUp) (err error) {
 	return
 }
 
-func Login(p *models.ParamSignIn) (err error) {
+func Login(p *models.ParamSignIn) (token string, err error) {
 	user, err := mysql.QueryUserByUsername(p.Username)
 	if err != nil {
-		return err
+		return
 	}
 	h := md5.New()
 	h.Write([]byte(secret))
 	pwd := hex.EncodeToString(h.Sum([]byte(p.Password)))
 	if pwd != user.Password {
-		return mysql.ErrorPasswordWrong
+		err = mysql.ErrorPasswordWrong
+		return
 	}
+	//生成token
+	token, _, err = jwt.GenToken(user.UserID, user.Username)
 	return
 }
 
