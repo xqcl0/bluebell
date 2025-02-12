@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	_ "bluebell/docs" // 千万不要忘了导入把你上一步生成的docs
-
+	"github.com/gin-contrib/pprof"
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
@@ -27,7 +27,7 @@ func Setup(mode string) *gin.Engine {
 		v1.POST("/signup", controller.SignUpHandler)
 		v1.POST("/login", controller.LoginHandler)
 	}
-	v1.Use(middlewares.JWTAuthMiddleware())
+	//v1.Use(middlewares.JWTAuthMiddleware())
 	//社区接口
 	{
 		v1.GET("/community", controller.CommunityHandler)
@@ -42,6 +42,6 @@ func Setup(mode string) *gin.Engine {
 	})
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	pprof.Register(r)
 	return r
 }
