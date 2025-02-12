@@ -1,0 +1,87 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "这里写描述信息",
+        "title": "这里写标题",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "这里写联系人信息",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "这里写接口服务的host",
+    "basePath": "这里写base path",
+    "paths": {
+        "/community/:id": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "可按社区按时间或分数排序查询帖子列表接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "帖子相关接口"
+                ],
+                "summary": "升级版帖子列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "社区id",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "查询参数",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.CommunityDetail"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.CommunityDetail": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "introduction": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "GO社区"
+                }
+            }
+        }
+    }
+}
