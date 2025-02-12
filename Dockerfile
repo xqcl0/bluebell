@@ -23,7 +23,7 @@ WORKDIR /dist
 RUN cp /build/app .
 
 # 声明服务端口
-EXPOSE 8888
+EXPOSE 8081
 
 # 启动容器时运行的命令
 CMD ["/dist/app"]
